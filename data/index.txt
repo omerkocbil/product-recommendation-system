@@ -1,0 +1,1 @@
+v1: Version 1 of data is raw data which is acquring from database. Neither cleaning nor feature extraction, no operation on data.
