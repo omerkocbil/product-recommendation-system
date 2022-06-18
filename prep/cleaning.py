@@ -17,5 +17,16 @@ client_data = data_op1.groupby('client')['product_id'].apply(list) \
 client_data['view_count'] = [len(product_list) 
                              for product_list in client_data['products']]
 
-customers_to_be_removed = client_data[client_data['view_count'] == 1]['client'].to_list()
-data_op2 = data_op1[~data_op1['client'].isin(customers_to_be_removed)]
+clients_to_be_removed = client_data[client_data['view_count'] == 1]['client'].to_list()
+data_op2 = data_op1[~data_op1['client'].isin(clients_to_be_removed)]
+
+#third operation - remove products viewed less than the threshold
+product_data = data_op2.groupby('product_id')['client'].apply(list) \
+                  .reset_index(name='clients')
+
+product_data['view_count'] = [len(client_list) 
+                             for client_list in product_data['clients']]
+
+threshold = 10
+products_to_be_removed = product_data[product_data['view_count'] < threshold]['product_id'].to_list()
+data_op3 = data_op2[~data_op2['product_id'].isin(products_to_be_removed)]
