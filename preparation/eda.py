@@ -36,6 +36,11 @@ print(f"min: {min(client_diff_views)}, max: {max(client_diff_views)}, \
 #plot products distribution
 product_views = data['product_id'].value_counts()
 sns.histplot(product_views, binwidth=1)
+plt.xlim(0, 100)
+
+product_diff_views_gt10 = [view for view in product_views if view > 10]
+print(f"Ratio of products with more than 10 views to total products: \
+      {len(product_diff_views_gt10)/len(product_views)*100}")
 
 print(sorted(product_views))
 print(f"min: {min(product_views)}, max: {max(product_views)}, \
