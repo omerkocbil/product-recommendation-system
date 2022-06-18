@@ -30,3 +30,6 @@ product_data['view_count'] = [len(client_list)
 threshold = 10
 products_to_be_removed = product_data[product_data['view_count'] < threshold]['product_id'].to_list()
 data_op3 = data_op2[~data_op2['product_id'].isin(products_to_be_removed)]
+
+#save the data
+data_op3.to_csv("../data/case_study_data_v2.csv", index=False)
