@@ -53,3 +53,19 @@ print(f"min: {min(product_diff_views)}, max: {max(product_diff_views)}, \
 #more than 25 viewed products
 product_diff_views_gt25 = [view for view in product_diff_views if view > 25]
 sns.histplot(product_diff_views_gt25, binwidth=25)
+
+#plot views by date interval
+data['timestamp'] = pd.to_datetime(data['timestamp'], format='%Y-%m-%d %H:%M:%S')
+
+data['date_intervals'] = ['morning' if 7<=time.hour<12 else 'afternoon' 
+                          if 12<=time.hour<17 else 'evening' if 17<=time.hour<20 
+                          else 'night' if time.hour>=20 or time.hour==0 else 'midnight' 
+                          if 1<=time.hour<7 else 'error' for time in data['timestamp']]
+
+sns.countplot(x='date_intervals', data=data)
+
+#plot views by weekday
+days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+data['weekday'] = [days[time.weekday()] for time in data['timestamp']]
+
+sns.countplot(x='weekday', data=data)
