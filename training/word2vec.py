@@ -1,7 +1,7 @@
 import pickle
 from gensim.models import Word2Vec
 
-with open("../data/word_vector.pkl", "rb") as f:
+with open("data/word_vector.pkl", "rb") as f:
     word_vector = pickle.load(f)
 
 #train word2vec model
@@ -10,5 +10,5 @@ model = Word2Vec(sentences=word_vector, window=10, sg=1, hs=0, negative=20,
                  seed=24)
 
 #save the model
-with open("../model/word2vec_model.pkl", "wb") as f:
+with open("model/word2vec_model.pkl", "wb") as f:
     pickle.dump(model, f, protocol=pickle.HIGHEST_PROTOCOL)
