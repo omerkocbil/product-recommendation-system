@@ -9,8 +9,6 @@ clients = data["client"].unique().tolist()
 print(len(clients))
 
 #split train and validation
-random.shuffle(clients)
-
 client_ids = [clients[i] for i in range(round(0.9 * len(clients)))]
 
 train_data = data[data['client'].isin(client_ids)]
