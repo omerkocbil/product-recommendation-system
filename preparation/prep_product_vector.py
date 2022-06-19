@@ -1,9 +1,10 @@
 import pandas as pd
 import random as random
+import pickle
 
 data = pd.read_csv("../data/case_study_data_v2.csv")
 
-##Create word vectors and prepare for word2vec
+##Create word vectors and prepare data for word2vec
 clients = data["client"].unique().tolist()
 print(len(clients))
 
@@ -21,8 +22,13 @@ for id in train_data['client'].unique().tolist():
     vector = train_data[train_data["client"] == id]["product_id"].tolist()
     train_word_vector.append(vector)
 
-#create valiadtion word vector
-valiadtion_word_vector = []
+#create validation word vector
+validation_word_vector = []
 for id in validation_data['client'].unique().tolist():
     vector = validation_data[validation_data["client"] == id]["product_id"].tolist()
-    valiadtion_word_vector.append(vector)
+    validation_word_vector.append(vector)
+
+#save word vectors
+word_vectors = (train_word_vector, validation_word_vector)
+with open("../data/word_vectors.pkl", "wb") as f:
+    pickle.dump(word_vectors, f, protocol=pickle.HIGHEST_PROTOCOL)

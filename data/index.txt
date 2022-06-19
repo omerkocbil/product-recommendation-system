@@ -1,9 +1,13 @@
-v1: Version 1 of data is raw data which is acquring from database. Neither 
+case_study_data_v1: Version 1 of data is raw data which is acquring from database. Neither 
 cleaning nor feature extraction, no operation on data.
 
-v2: Version 2 of data is the appropriate dataset to create the product vectors
+case_study_data_v2: Version 2 of data is the appropriate dataset to create the product vectors
 before the training with 3 different cleaning operations on the Version 1 data.
 These cleaning processes which are applied one after the other are as follows:
-- Remove client's duplicate product viewing
-- Remove clients with only 1 product view
-- Remove products viewed less than the threshold
+    - Remove client's duplicate product viewing
+    - Remove clients with only 1 product view
+    - Remove products viewed less than the threshold
+
+word_vectors.pkl: A data file containing train word vector and validation word
+vector as a tuple. These are required word vectors for the word2vec model. 
+Prepared and saved, ready to use for the model.
