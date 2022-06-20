@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir --upgrade -r /product-recommendation-system/requi
 
 EXPOSE $PORT
  
-CMD gunicorn code.api.main:app --bind 0.0.0.0:$PORT --preload
+CMD gunicorn code.api.main:app --bind 0.0.0.0:$PORT --worker-class uvicorn.workers.UvicornWorker
