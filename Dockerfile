@@ -1,12 +1,10 @@
 FROM python:3.8
-ARG port
+ARG PORT
 
 WORKDIR /product-recommendation-system
 
 COPY ./requirements.txt /product-recommendation-system/requirements.txt
 COPY ./code /product-recommendation-system/code
-
-ENV PORT=$port
  
 RUN pip install --no-cache-dir --upgrade -r /product-recommendation-system/requirements.txt
 
