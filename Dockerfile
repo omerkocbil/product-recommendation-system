@@ -9,4 +9,4 @@ RUN pip install --no-cache-dir --upgrade -r /product-recommendation-system/requi
  
 COPY ./code /product-recommendation-system/code
  
-CMD ["uvicorn", "code.api.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "code.api.main:app", "--host", "0.0.0.0", "--port", "5000"]
