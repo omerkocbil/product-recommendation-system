@@ -1,7 +1,7 @@
 import pandas as pd
 
 #get data
-data = pd.read_csv("code/data/case_study_data_v1.csv", 
+data = pd.read_csv("data/case_study_data_v1.csv", 
                    usecols=['client', 'timestamp', 'product_id'])
 
 data['timestamp'] = pd.to_datetime(data['timestamp'], format='%Y-%m-%d %H:%M:%S')
@@ -32,4 +32,4 @@ clients_to_be_removed = client_data[client_data['view_count'] == 1]['client'].to
 data_op3 = data_op2[~data_op2['client'].isin(clients_to_be_removed)]
 
 #save the data
-data_op3.to_csv("code/data/case_study_data_v2.csv", index=False)
+data_op3.to_csv("data/case_study_data_v2.csv", index=False)
