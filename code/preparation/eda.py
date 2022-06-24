@@ -2,6 +2,8 @@ import pandas as pd
 import statistics as stat
 import matplotlib.pyplot as plt
 import seaborn as sns
+import tqdm
+from itertools import islice
 
 #get data
 data = pd.read_csv("../data/case_study_data_v1.csv", 
@@ -51,6 +53,7 @@ product_data = data.groupby('product_id')['client'].apply(set) \
                    .reset_index(name='clients')
 product_diff_views = [len(list) for list in product_data['clients'].to_list()]
 sns.histplot(product_diff_views, binwidth=1)
+plt.xlim(0, 100)
 
 print(f"min: {min(product_diff_views)}, max: {max(product_diff_views)}, \
       mode: {stat.mode(product_diff_views)}, mean: {stat.mean(product_diff_views)}")
@@ -74,3 +77,23 @@ days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sun
 data['weekday'] = [days[time.weekday()] for time in data['timestamp']]
 
 sns.countplot(x='weekday', data=data)
+
+#find two most viewed products together
+non_duplicate_data = data.drop_duplicates(subset=['client', 'product_id'],
+                                          keep='first').reset_index(drop=True)
+
+products = non_duplicate_data.groupby('product_id')['client'].apply(list) \
+                             .reset_index(name='clients')
+products['count'] = non_duplicate_data.groupby('product_id')['client'] \
+                                      .count().tolist()
+products = products[products['count'] >= 25].reset_index(drop=True)
+
+two_products = []
+for index, row1 in tqdm(products.iterrows()):
+      for _, row2 in islice(products.iterrows(), index+1, None):
+            intersection = list(set(row1['clients']) & set(row2['clients']))
+            two_products.append([row1['product_id'], row2['product_id'], 
+                                 intersection, len(intersection)])
+      
+two_products = pd.DataFrame(two_products, columns=['Product 1', 'Product 2', 
+                                                   'Clients', 'Count'])
